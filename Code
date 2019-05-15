@@ -1,0 +1,239 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Car
+{
+private:
+	int year;
+	string brand, model, colour, number, fuel, service;
+
+	Car(int cy, string cb, string cm, string cc, string cn, string cf, string cs)
+	{
+		model = cm;
+		colour = cc;
+		year = cy;
+		brand = cb;
+		number = cn;
+		fuel = cf;
+		service = cs;
+	}
+
+public:
+
+	Car()
+	{
+		brand = "не известна. ";
+		model = "не известна. ";
+		colour = "не известен. ";
+		number = "не известен. ";
+		fuel = "не известно. ";
+		service = "не известна. ";
+		year = 0;
+	}
+
+	void vyvodCar()
+	{
+		cout << "Марка: " << brand << " Модель: " << model << " Цвет: " << colour << " Год выпуска: " << year << " Номер: " << number << " Топливо: " << fuel << " Услуга: " << service << "\n\n";
+	}
+
+	void vvodB()
+	{
+		cin >> brand;
+	}
+
+	void vvodM()
+	{
+		cin >> model;
+	}
+
+	void vvodC()
+	{
+		cin >> colour;
+	}
+
+	void vvodY()
+	{
+		cin >> year;
+	}
+
+	void vvodN()
+	{
+		cin >> number;
+	}
+
+	void vvodF()
+	{
+		cin >> fuel;
+	}
+
+	void vvodS()
+	{
+		cin >> service;
+	}
+};
+
+class Man
+{
+private:
+	string name, surname, name2;
+
+	Man(string a, string b, string c)
+	{
+		name = a;
+		surname = b;
+		name2 = c;
+	};
+
+public:
+
+	Man()
+	{
+		surname = "не известна";
+		name = " не известно";
+		name2 = " не известно";
+	};
+
+	void vvodMan()
+	{
+		cin >> surname >> name >> name2;
+	}
+
+	void vyvodMan()
+	{
+		cout << "Владелец" << endl << "Фамилия: " << surname << " Имя: " << name << " Отчество: " << name2 << "\n\n";
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "RUS");
+
+	int size = 1;
+	int i;
+
+	vector <Car> Cars;
+	vector <Man> Men;
+
+	int k;
+	Man one;
+	Car two;
+
+	do
+	{
+		cout << "Выберите необходимое действие" << endl;
+		cout << "1. Задать количество автомобилей (по умолчанию 1)" << endl;
+		cout << "2. Ввод/редактирование данных автомобиля" << endl;
+		cout << "3. Ввод/редактирование данных автовладельца" << endl;
+		cout << "4. Вывод имеющейся информации" << endl;
+		cout << "5. Удаление автомобиля из списка" << endl;
+		cout << "6. Выход из программы" << endl;
+		cin >> k;
+
+		switch (k)
+		{
+		case 1:
+			cin >> size;
+			for (int i = 0; i < size; i++)
+			{
+				Car c;
+				Man m;
+				Cars.push_back(c);
+				Men.push_back(m);
+			}
+			break;
+
+		case 2:
+			cout << "Какое поле вы хотите изменить?" << endl << "1. Марка" << endl << "2. Модель" << endl << "3. Цвет" << endl << "4. Год выпуска " << endl << "5. Номер" << endl << "6. Топливо" << endl << "7. Услуга" << endl << "8. Все сразу" << endl;
+			int n;
+			int m;
+			cin >> n;
+			if (size != 1)
+			{
+				cout << "Поле(я) какой по счёту машины вы хотите изменить? От 1 до " << Cars.size() << endl;
+				cin >> m;
+				m = m - 1;
+			}
+			switch (n)
+			{
+			case 1:
+				Cars[m].vvodB();
+				break;
+
+			case 2:
+				Cars[m].vvodM();
+				break;
+
+			case 3:
+				Cars[m].vvodC();
+				break;
+
+			case 4:
+				Cars[m].vvodY();
+				break;
+
+			case 5:
+				Cars[m].vvodN();
+				break;
+
+			case 6:
+				Cars[m].vvodF();
+				break;
+
+			case 7:
+				Cars[m].vvodS();
+				break;
+
+			case 8:
+				Cars[m].vvodB();
+				Cars[m].vvodM();
+				Cars[m].vvodC();
+				Cars[m].vvodY();
+				Cars[m].vvodN();
+				Cars[m].vvodF();
+				Cars[m].vvodS();
+				break;
+			}
+			break;
+
+		case 3:
+			if (size != 1)
+			{
+				cout << "ФИО какого по счёту владельца вы хотите изменить? От 1 до " << Cars.size() << endl;
+				cin >> m;
+				m = m - 1;
+			}
+			cout << "Введите новые фамилию, имя и отчество по порядку: " << endl;
+			Men[m].vvodMan();
+			break;
+
+		case 4:
+			for (int i = 0; i < Cars.size(); i++)
+			{
+				Cars[i].vyvodCar();
+				Men[i].vyvodMan();
+			}
+			break;
+		case 5:
+			if (size != 1)
+			{
+				cout << "Запись о какой по счёту машине вы хотите удалить? От 1 до " << Cars.size() << endl;
+				cin >> m;
+				Cars.erase(Cars.begin() + (m - 1));
+			}
+			else
+			{
+				cout << "Ошибка. В коллекции записей не может находиться менее одной машины" << endl;
+			}
+			break;
+
+		default:
+			break;
+		}
+	} while (k != 6);
+
+	system("pause");
+	return 0;
+}
